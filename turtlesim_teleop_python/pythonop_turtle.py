@@ -673,10 +673,25 @@ def main(args=None):
     """Application runnable enty point."""
     rclpy.init(args=args)
     turtle = TurtleTwistPublisher()
-    rclpy.spin(turtle)
+    demo(turtle)
     turtle.destroy_node()
     rclpy.shutdown()
 
+
+def demo(turtle: TurtleTwistPublisher) -> None:
+    """Do some turtle fun."""
+    turtle.left(90)
+    turtle.forward(5)
+    turtle.right(160)
+    turtle.forward(5.5)
+    turtle.left(160)
+    turtle.forward(5)
+    turtle.right(90)
+    turtle.forward(3)
+    turtle.backward(1.5)
+    turtle.right(90)
+    turtle.forward(5)
+    turtle.circle(3)
 
 if __name__ == "__main__":
     main()

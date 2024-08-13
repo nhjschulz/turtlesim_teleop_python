@@ -26,8 +26,6 @@ turtle.backward(1.5)
 turtle.right(90)
 turtle.forward(5)
 
-
-turtle.forward(10)
 turtle.destroy_node()
 rclpy.shutdown()
 ```
