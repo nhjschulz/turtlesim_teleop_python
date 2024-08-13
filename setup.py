@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-package_name = 'ros2_turtlesim_teleop_python'
+package_name = 'turtlesim_teleop_python'
 
 setup(
     name=package_name,
@@ -20,7 +20,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'pythonop_turtle = ros2_turtlesim_teleop_python.pythonop_turtle:main'
+            'pythonop_turtle = turtlesim_teleop_python.pythonop_turtle:main'
         ],
     },
 )
