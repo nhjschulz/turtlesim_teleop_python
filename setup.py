@@ -13,9 +13,9 @@ setup(
     ],
     install_requires=['setuptools'],
     zip_safe=True,
-    maintainer='norbert',
+    maintainer='Norbert Schulz',
     maintainer_email='github@schulznorbert.de',
-    description='TODO: Package description',
+    description='TurtleSim Python Controller',
     license='MIT',
     tests_require=['pytest'],
     entry_points={

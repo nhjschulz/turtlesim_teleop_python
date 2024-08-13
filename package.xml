@@ -3,9 +3,12 @@
 <package format="3">
   <name>ros2_turtlesim_teleop_python</name>
   <version>0.0.0</version>
-  <description>TODO: Package description</description>
+  <description>TurtleSim Python Controller</description>
   <maintainer email="github@schulznorbert.de">norbert</maintainer>
   <license>MIT</license>
+
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>rclpy</exec_depend>
 
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>
