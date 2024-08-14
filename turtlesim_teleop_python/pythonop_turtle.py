@@ -32,6 +32,8 @@ import rclpy
 import rclpy.destroyable
 from rclpy.node import Node
 
+from std_srvs.srv import Empty
+
 from turtle_navigation import TNavigator, Vec2D
 
 from turtlesim.srv import SetPen, TeleportAbsolute
@@ -51,6 +53,12 @@ class TurtleTwistPublisher(Node, TNavigator):
 
         self._setPen_srv = self.create_client(SetPen, '/turtle1/set_pen')
         self._teleport_abs_srv = self.create_client(TeleportAbsolute, '/turtle1/teleport_absolute')
+        self._clear_srv = self.create_client(Empty, '/clear')
+
+    def clear(self) -> None:
+        """Send clear request."""
+        request = Empty.Request()
+        self._clear_srv.call_async(request)
 
     def penup(self) -> None:
         """Lift the pen up."""
