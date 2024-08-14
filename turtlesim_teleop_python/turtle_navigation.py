@@ -1,4 +1,4 @@
-"""Implementation of Application main module."""
+"""Implementation of turtle operations."""
 
 # MIT License
 #

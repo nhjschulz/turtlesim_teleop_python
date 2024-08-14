@@ -32,15 +32,15 @@ import rclpy
 import rclpy.destroyable
 from rclpy.node import Node
 
-from turtle_navigation import TNavigator
+from turtle_navigation import TNavigator, Vec2D
 
-from turtlesim.srv import SetPen
+from turtlesim.srv import SetPen, TeleportAbsolute
 
 
 class TurtleTwistPublisher(Node, TNavigator):
     """A Twist message publisher for TurtleSim."""
 
-    def __init__(self, name="turtlesim_teleop_python"):
+    def __init__(self, name='turtlesim_teleop_python'):
         """Define default constructor for class."""
         Node.__init__(self, node_name=name)
         TNavigator.__init__(self)
@@ -50,6 +50,7 @@ class TurtleTwistPublisher(Node, TNavigator):
         )
 
         self._setPen_srv = self.create_client(SetPen, '/turtle1/set_pen')
+        self._teleport_abs_srv = self.create_client(TeleportAbsolute, '/turtle1/teleport_absolute')
 
     def penup(self) -> None:
         """Lift the pen up."""
@@ -76,6 +77,15 @@ class TurtleTwistPublisher(Node, TNavigator):
 
     pd = pendown
     down = pendown
+
+    def _goto(self, pos: Vec2D) -> None:
+        super()._goto(pos)
+
+        request = TeleportAbsolute.Request()
+        request.x = float(self.xcor())
+        request.y = float(self.ycor())
+        request.theta = math.radians(self.heading())
+        self._teleport_abs_srv.call_async(request)
 
     def _rotate(self, angle):
         super()._rotate(angle)
@@ -113,6 +123,7 @@ def main(args=None):
 
 def demo(turtle: TurtleTwistPublisher) -> None:
     """Do some turtle fun."""
+    turtle.pendown()
     turtle.left(90)
     turtle.forward(5)
     turtle.right(160)
