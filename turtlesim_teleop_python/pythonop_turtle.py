@@ -86,9 +86,8 @@ class TurtleTwistPublisher(Node, TNavigator):
     pd = pendown
     down = pendown
 
-    def _goto(self, pos: Vec2D) -> None:
-        super()._goto(pos)
-
+    def goto(self, x, y) -> None:
+        super().goto(x,y)
         request = TeleportAbsolute.Request()
         request.x = float(self.xcor())
         request.y = float(self.ycor())

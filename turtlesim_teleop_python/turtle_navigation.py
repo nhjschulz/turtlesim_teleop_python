@@ -389,7 +389,7 @@ class TNavigator(object):
         Example (for a Turtle instance named turtle):
         >>> turtle.home()
         """
-        self.goto(0, 0)
+        self.goto(5.544444561004639, 5.544444561004639)  # turtlesim home for turtle1
         self.setheading(0)
 
     def setx(self, x):
