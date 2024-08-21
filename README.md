@@ -1,19 +1,40 @@
 # turtlesim_teleop_python
-ROS2 TurtleSim  Python Controller
+A ROS2 TurtleSim  Python Controller similar to turtle_teleop_key, but
+using python turtle command scripts for controlling instead of key strokes.
 
+Read the [ROS2 turtlesim Tutorial](https://docs.ros.org/en/jazzy/Tutorials/Beginner-CLI-Tools/Introducing-Turtlesim/Introducing-Turtlesim.html)
+if you are unfamiliar with this evironment.
 
+# Installation and Running as ROS package
+
+1. Clone this repository into a ros2 workspace src folder
+2. Build workspace with `colcon build` followed by `source install/local_setup.bash`
+3. In another terminal launch the turtlesim package as described in the ROS2 Tutorial
+
+        sudo apt install ros-jazzy-turtlesim
+        ros2 run turtlesim turtlesim_node
+
+3. Run this package from the workspace with
+
+        run turtlesim_teleop_python pythonop_turtle
 
 # Interactive Test
-```python
-import sys
-sys.path.insert(0, ".")
 
+Interactive testing is working by going into 
+`turtlesim_teleop_python/turtlesim_teleop_python` folder
+and start python3. Then execute the commands below as an example:
+
+```python
 import rclpy
 from pythonop_turtle import TurtleTwistPublisher
 
 rclpy.init() 
 turtle = TurtleTwistPublisher()
 
+turtle.penup()
+turtle.clear()
+turtle.home()
+turtle.pendown()
 turtle.left(90)
 turtle.forward(5)
 turtle.right(160)
@@ -25,6 +46,10 @@ turtle.forward(3)
 turtle.backward(1.5)
 turtle.right(90)
 turtle.forward(5)
+turtle.penup()
+turtle.goto(2,2)
+turtle.pendown()
+turtle.circle(1.5)
 
 turtle.destroy_node()
 rclpy.shutdown()
