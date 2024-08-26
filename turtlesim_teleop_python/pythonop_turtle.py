@@ -82,6 +82,8 @@ class TurtleTwistPublisher(Node, TNavigator):
         """Send clear request."""
         request = Empty.Request()
         self._clear_srv.call_async(request)
+        self._delay()
+
 
     def penup(self) -> None:
         """Lift the pen up."""
@@ -92,6 +94,8 @@ class TurtleTwistPublisher(Node, TNavigator):
         request.width = 3
         request.off = 1
         self._setPen_srv.call_async(request)
+        self._delay()
+
 
     pu = penup
     up = penup
@@ -105,6 +109,7 @@ class TurtleTwistPublisher(Node, TNavigator):
         request.width = 3
         request.off = 0
         self._setPen_srv.call_async(request)
+        self._delay()
 
     def delay(self, dl=None) -> float:
         """Set or get update turtle update delay in seconds."""
@@ -137,7 +142,8 @@ class TurtleTwistPublisher(Node, TNavigator):
         request.y = float(self.ycor()) * self._scale_linear
         request.theta = math.radians(self.heading() * self._scale_angular)
         self._teleport_abs_srv.call_async(request)
-        rclpy.spin_once(self, timeout_sec=0.0)
+        self._delay()
+
 
     def _rotate(self, angle):
         super()._rotate(angle)
@@ -159,11 +165,13 @@ class TurtleTwistPublisher(Node, TNavigator):
             msg.linear.x = float(distance) * self._scale_linear
             self._publisher.publish(msg)
 
-        # tiwst message delay
+        self._delay()
+
+    def _delay(self, n=None):
+        """Message delay wait."""
         wait_for_time = time.time() + self._twist_delay
         while time.time() < wait_for_time:
             rclpy.spin_once(self, timeout_sec=0.0)
-
 
 def main(args=None):
     """Application runnable enty point."""
@@ -176,26 +184,36 @@ def main(args=None):
 
 def demo(turtle: TurtleTwistPublisher) -> None:
     """Do some turtle fun."""
-    turtle.penup()
     turtle.clear()
-    turtle.home()
-    turtle.pendown()
-    turtle.left(90)
-    turtle.forward(5)
-    turtle.right(160)
-    turtle.forward(5.5)
-    turtle.left(160)
-    turtle.forward(5)
-    turtle.right(90)
-    turtle.forward(3)
-    turtle.backward(1.5)
-    turtle.right(90)
-    turtle.forward(5)
     turtle.penup()
-    turtle.goto(2, 2)
+    turtle.home()
+    turtle.left(90.0)
+    turtle.forward(1.0)
     turtle.pendown()
-    turtle.circle(1.5)
+    turtle.circle(radius=1.0, extent=180.1)
+    turtle.right(180.0)
+    turtle.circle(radius=1.0, extent=180.1)
+    x = turtle.xcor()
+    y = turtle.ycor()
+    for i in range(0,181, 30):
+        print(i)
+        print(math.cos(math.radians(float(i))))
+        turtle.goto(
+            x + 1.0 - math.cos(math.radians(float(i))),
+            y - i /90)
+
+    x = turtle.xcor()
+    y = turtle.ycor()
+    for i in range(0,181, 30):
+        print(i)
+        print(math.cos(math.radians(float(i))))
+        turtle.goto(
+            x + 1.0 + math.cos(math.radians(180.0 + float(i))),
+            y + i /90)
+        
+    turtle.penup()
+    turtle.home()
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  
     main()
