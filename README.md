@@ -37,7 +37,7 @@ details.
 
 3. Run this package from the workspace with
 
-        run turtlesim_teleop_python pythonop_turtle
+        ros2 run turtlesim_teleop_python pythonop_turtle
 
 ## Parameter
 
